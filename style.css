@@ -33,6 +33,63 @@ body {
     justify-content: center;
     padding: 18px 14px 28px;
     overflow-x: hidden;
+    position: relative;
+}
+
+body::before,
+body::after {
+    content: "";
+    position: fixed;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    filter: blur(1px);
+    pointer-events: none;
+    z-index: 0;
+    animation: floatBlob 9s ease-in-out infinite;
+}
+
+body::before {
+    top: -60px;
+    right: -50px;
+    background: rgba(255, 255, 255, 0.35);
+}
+
+body::after {
+    bottom: -80px;
+    left: -60px;
+    background: rgba(43, 176, 224, 0.22);
+    animation-delay: -4.5s;
+}
+
+.bubble-layer {
+    position: fixed;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.bubble-layer span {
+    position: absolute;
+    bottom: -130px;
+    left: var(--x, 50%);
+    width: var(--size, 18px);
+    height: var(--size, 18px);
+    border-radius: 50%;
+    background: radial-gradient(
+        circle at 28% 28%,
+        rgba(255, 255, 255, 0.9) 0%,
+        rgba(255, 255, 255, 0.58) 36%,
+        rgba(161, 222, 240, 0.34) 100%
+    );
+    border: 1.5px solid rgba(255, 255, 255, 0.76);
+    box-shadow:
+        0 0 14px rgba(255, 255, 255, 0.34),
+        inset -8px -11px 14px rgba(76, 166, 202, 0.2);
+    opacity: 0;
+    animation: bubbleRise var(--duration, 16s) linear infinite;
+    animation-delay: var(--delay, 0s);
 }
 
 .page {
@@ -40,13 +97,16 @@ body {
     border-radius: 30px;
     background: var(--card);
     border: 1px solid rgba(255, 255, 255, 0.45);
-    backdrop-filter: blur(8px);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
     box-shadow: 0 16px 40px rgba(12, 28, 46, 0.15);
     padding: 24px 18px 20px;
     display: flex;
     flex-direction: column;
     gap: 20px;
     animation: fadeUp 0.55s ease both;
+    position: relative;
+    z-index: 2;
 }
 
 .container-perfil-bio {
@@ -64,6 +124,7 @@ body {
     overflow: hidden;
     border: 5px solid var(--ring);
     box-shadow: 0 12px 30px rgba(8, 24, 38, 0.2);
+    animation: portraitFloat 5.5s ease-in-out infinite;
 }
 
 .container-foto-perfil img {
@@ -76,6 +137,8 @@ body {
 .descricao-perfil {
     display: grid;
     gap: 6px;
+    animation: fadeUp 0.5s ease both;
+    animation-delay: 0.12s;
 }
 
 .marca {
@@ -114,6 +177,8 @@ body {
     font-size: 0.88rem;
     font-weight: 600;
     opacity: 0.85;
+    animation: fadeUp 0.5s ease both;
+    animation-delay: 0.22s;
 }
 
 .container-links {
@@ -137,11 +202,33 @@ body {
     padding: 12px 18px;
     box-shadow: var(--button-shadow);
     transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.52s ease both;
 }
 
 .links-button img {
     width: 24px;
     height: 24px;
+    transition: transform 0.2s ease;
+}
+
+.links-button::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -120%;
+    width: 70%;
+    height: 100%;
+    background: linear-gradient(
+        120deg,
+        transparent 0%,
+        rgba(255, 255, 255, 0.45) 50%,
+        transparent 100%
+    );
+    transform: skewX(-20deg);
+    transition: left 0.55s ease;
+    pointer-events: none;
 }
 
 .links-button:hover,
@@ -153,6 +240,16 @@ body {
 
 .links-button:active {
     transform: translateY(0);
+}
+
+.links-button:hover::after,
+.links-button:focus-visible::after {
+    left: 130%;
+}
+
+.links-button:hover img,
+.links-button:focus-visible img {
+    transform: translateY(-1px) scale(1.08);
 }
 
 .links-button:focus-visible {
@@ -170,6 +267,18 @@ body {
 
 .is-catalogo {
     background: linear-gradient(90deg, #fffef4 0%, #eaf4ff 100%);
+}
+
+.container-links .links-button:nth-child(1) {
+    animation-delay: 0.32s;
+}
+
+.container-links .links-button:nth-child(2) {
+    animation-delay: 0.42s;
+}
+
+.container-links .links-button:nth-child(3) {
+    animation-delay: 0.52s;
 }
 
 @media (max-width: 360px) {
@@ -214,9 +323,20 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+    body::before,
+    body::after,
+    .bubble-layer span,
     .page,
+    .container-foto-perfil,
+    .descricao-perfil,
+    .links-helper,
     .links-button {
         animation: none;
+        transition: none;
+    }
+
+    .links-button::after,
+    .links-button img {
         transition: none;
     }
 }
@@ -230,5 +350,48 @@ body {
     to {
         opacity: 1;
         transform: translateY(0);
+    }
+}
+
+@keyframes portraitFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+@keyframes bubbleRise {
+    0% {
+        transform: translate3d(0, 0, 0) scale(0.8);
+        opacity: 0;
+    }
+
+    15% {
+        opacity: 0.68;
+    }
+
+    50% {
+        transform: translate3d(var(--mid, 16px), -62vh, 0) scale(1.02);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: translate3d(var(--end, -10px), -128vh, 0) scale(1.2);
+        opacity: 0;
+    }
+}
+
+@keyframes floatBlob {
+    0%,
+    100% {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+
+    50% {
+        transform: translate3d(0, -18px, 0) scale(1.06);
     }
 }
