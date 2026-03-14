@@ -71,6 +71,11 @@ body::after {
 }
 
 .bubble-layer span {
+    --bubble-c1: rgba(255, 255, 255, 0.9);
+    --bubble-c2: rgba(255, 255, 255, 0.58);
+    --bubble-c3: rgba(161, 222, 240, 0.34);
+    --bubble-border: rgba(255, 255, 255, 0.76);
+    --bubble-glow: rgba(255, 255, 255, 0.34);
     position: absolute;
     bottom: -130px;
     left: var(--x, 50%);
@@ -79,17 +84,41 @@ body::after {
     border-radius: 50%;
     background: radial-gradient(
         circle at 28% 28%,
-        rgba(255, 255, 255, 0.9) 0%,
-        rgba(255, 255, 255, 0.58) 36%,
-        rgba(161, 222, 240, 0.34) 100%
+        var(--bubble-c1) 0%,
+        var(--bubble-c2) 36%,
+        var(--bubble-c3) 100%
     );
-    border: 1.5px solid rgba(255, 255, 255, 0.76);
+    border: 1.5px solid var(--bubble-border);
     box-shadow:
-        0 0 14px rgba(255, 255, 255, 0.34),
+        0 0 14px var(--bubble-glow),
         inset -8px -11px 14px rgba(76, 166, 202, 0.2);
     opacity: 0;
     animation: bubbleRise var(--duration, 16s) linear infinite;
     animation-delay: var(--delay, 0s);
+}
+
+.bubble-layer span:nth-child(4n + 1) {
+    --bubble-c3: rgba(255, 189, 214, 0.44);
+    --bubble-border: rgba(255, 228, 238, 0.86);
+    --bubble-glow: rgba(255, 192, 217, 0.42);
+}
+
+.bubble-layer span:nth-child(4n + 2) {
+    --bubble-c3: rgba(180, 245, 218, 0.42);
+    --bubble-border: rgba(213, 255, 237, 0.84);
+    --bubble-glow: rgba(175, 241, 214, 0.4);
+}
+
+.bubble-layer span:nth-child(4n + 3) {
+    --bubble-c3: rgba(175, 220, 255, 0.44);
+    --bubble-border: rgba(214, 239, 255, 0.85);
+    --bubble-glow: rgba(173, 214, 249, 0.41);
+}
+
+.bubble-layer span:nth-child(4n + 4) {
+    --bubble-c3: rgba(255, 239, 176, 0.42);
+    --bubble-border: rgba(255, 248, 214, 0.84);
+    --bubble-glow: rgba(255, 235, 160, 0.38);
 }
 
 .page {
@@ -158,6 +187,8 @@ body::after {
     font-size: 2rem;
     line-height: 1.1;
     letter-spacing: 0.01em;
+    text-shadow: 0 0 12px rgba(255, 255, 255, 0.38);
+    animation: titleGlow 3.8s ease-in-out infinite;
 }
 
 .descricao-perfil h4 {
@@ -322,6 +353,59 @@ body::after {
     }
 }
 
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-1: #102136;
+        --bg-2: #122f2a;
+        --card: rgba(11, 22, 34, 0.6);
+        --text: #edf5ff;
+        --button-bg: rgba(16, 35, 53, 0.9);
+        --button-border: rgba(189, 219, 246, 0.24);
+        --button-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        --ring: rgba(230, 244, 255, 0.92);
+    }
+
+    body {
+        background:
+            radial-gradient(circle at 16% 12%, rgba(130, 197, 255, 0.2) 0, transparent 36%),
+            radial-gradient(circle at 86% 88%, rgba(114, 252, 226, 0.18) 0, transparent 45%),
+            linear-gradient(165deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    }
+
+    body::before {
+        background: rgba(157, 215, 255, 0.2);
+    }
+
+    body::after {
+        background: rgba(118, 250, 227, 0.2);
+    }
+
+    .page {
+        border-color: rgba(183, 218, 247, 0.22);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.34);
+    }
+
+    .descricao-perfil h1 {
+        text-shadow: 0 0 18px rgba(139, 222, 255, 0.45);
+    }
+
+    .links-helper {
+        opacity: 0.92;
+    }
+
+    .is-instagram {
+        background: linear-gradient(90deg, rgba(37, 46, 73, 0.94) 0%, rgba(82, 54, 74, 0.92) 100%);
+    }
+
+    .is-whatsapp {
+        background: linear-gradient(90deg, rgba(27, 58, 53, 0.93) 0%, rgba(28, 93, 71, 0.92) 100%);
+    }
+
+    .is-catalogo {
+        background: linear-gradient(90deg, rgba(24, 50, 72, 0.93) 0%, rgba(31, 75, 106, 0.93) 100%);
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     body::before,
     body::after,
@@ -329,6 +413,7 @@ body::after {
     .page,
     .container-foto-perfil,
     .descricao-perfil,
+    .descricao-perfil h1,
     .links-helper,
     .links-button {
         animation: none;
@@ -361,6 +446,21 @@ body::after {
 
     50% {
         transform: translateY(-6px);
+    }
+}
+
+@keyframes titleGlow {
+    0%,
+    100% {
+        text-shadow:
+            0 0 6px rgba(255, 255, 255, 0.34),
+            0 0 12px rgba(255, 255, 255, 0.26);
+    }
+
+    50% {
+        text-shadow:
+            0 0 12px rgba(255, 255, 255, 0.68),
+            0 0 22px rgba(164, 232, 255, 0.52);
     }
 }
 
