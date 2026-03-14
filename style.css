@@ -1,56 +1,234 @@
-@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-body{
-    background: linear-gradient(aqua,#ffffb8);
-    font-family: "Montserrat", sans-serif;
-}
-html{
-    background: linear-gradient(aqua,#ffffb8);
-    font-family: "Montserrat", sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=Montserrat:wght@400;500;600;700&display=swap");
+
+:root {
+    --bg-1: #35d5ff;
+    --bg-2: #f8ffbe;
+    --card: rgba(255, 255, 255, 0.38);
+    --text: #121629;
+    --button-bg: #fffef4;
+    --button-border: rgba(18, 22, 41, 0.2);
+    --button-shadow: 0 12px 24px rgba(21, 29, 46, 0.12);
+    --ring: #ffffff;
 }
 
-@media (max-width: 600px) {
-    .container-links{
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-        padding-bottom: 41%;
-        align-items: center;
-    }
-    .links{
-        text-decoration: none;
-        color: black;
-        align-items: center;
-        display: flex;
-        gap: 5px;
-    }
-    .links-button{
-        background-color: #ffffb8;
-        border-radius: 30px;
-        display: flex;
-        justify-content: center;
-        text-align: center;
-        align-items: center;
-        height: 50px;
-        width: 300px;
-    }
-    .container-foto-perfil{
-        border-radius:100%;
-        background-image: url(/logos/351719764_1293543898260308_3629749141112823803_n.jpg);
-        height: 150px;
-        width: 150px;
-        margin-bottom: 5%;
-    }
-    .container-perfil-bio{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        text-align: center;
-        padding: 10%;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
 
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
+    color: var(--text);
+    background:
+        radial-gradient(circle at 12% 10%, rgba(255, 255, 255, 0.5) 0, transparent 35%),
+        radial-gradient(circle at 85% 90%, rgba(58, 151, 183, 0.2) 0, transparent 42%),
+        linear-gradient(165deg, var(--bg-1) 0%, var(--bg-2) 100%);
+    display: flex;
+    justify-content: center;
+    padding: 18px 14px 28px;
+    overflow-x: hidden;
+}
+
+.page {
+    width: min(100%, 430px);
+    border-radius: 30px;
+    background: var(--card);
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 16px 40px rgba(12, 28, 46, 0.15);
+    padding: 24px 18px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    animation: fadeUp 0.55s ease both;
+}
+
+.container-perfil-bio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 14px;
+}
+
+.container-foto-perfil {
+    width: 148px;
+    height: 148px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid var(--ring);
+    box-shadow: 0 12px 30px rgba(8, 24, 38, 0.2);
+}
+
+.container-foto-perfil img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.descricao-perfil {
+    display: grid;
+    gap: 6px;
+}
+
+.marca {
+    display: inline-block;
+    margin: 0 auto 2px;
+    padding: 6px 12px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.65);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.descricao-perfil h1 {
+    font-family: "Bricolage Grotesque", sans-serif;
+    font-size: 2rem;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+}
+
+.descricao-perfil h4 {
+    font-size: 1rem;
+    font-weight: 700;
+}
+
+.descricao-perfil p {
+    font-size: 0.98rem;
+    line-height: 1.45;
+    max-width: 28ch;
+    margin: 0 auto;
+}
+
+.links-helper {
+    text-align: center;
+    font-size: 0.88rem;
+    font-weight: 600;
+    opacity: 0.85;
+}
+
+.container-links {
+    display: grid;
+    gap: 12px;
+}
+
+.links-button {
+    min-height: 56px;
+    width: 100%;
+    border-radius: 999px;
+    border: 1px solid var(--button-border);
+    background: var(--button-bg);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px 18px;
+    box-shadow: var(--button-shadow);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
+}
+
+.links-button img {
+    width: 24px;
+    height: 24px;
+}
+
+.links-button:hover,
+.links-button:focus-visible {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 28px rgba(21, 29, 46, 0.16);
+    filter: saturate(1.08);
+}
+
+.links-button:active {
+    transform: translateY(0);
+}
+
+.links-button:focus-visible {
+    outline: 3px solid rgba(3, 102, 214, 0.38);
+    outline-offset: 2px;
+}
+
+.is-instagram {
+    background: linear-gradient(90deg, #fffef4 0%, #ffe8f4 100%);
+}
+
+.is-whatsapp {
+    background: linear-gradient(90deg, #fffef4 0%, #ddfbe8 100%);
+}
+
+.is-catalogo {
+    background: linear-gradient(90deg, #fffef4 0%, #eaf4ff 100%);
+}
+
+@media (max-width: 360px) {
+    .page {
+        border-radius: 22px;
+        padding: 18px 14px;
     }
-    .descricao-perfil{
-        margin: 0;
-        line-height: 40px;
+
+    .container-foto-perfil {
+        width: 132px;
+        height: 132px;
+    }
+
+    .descricao-perfil h1 {
+        font-size: 1.7rem;
+    }
+
+    .links-button {
+        min-height: 52px;
+        font-size: 0.95rem;
+    }
+}
+
+@media (min-width: 768px) {
+    body {
+        padding-top: 34px;
+    }
+
+    .page {
+        gap: 24px;
+        padding: 30px 24px 24px;
+    }
+
+    .container-foto-perfil {
+        width: 164px;
+        height: 164px;
+    }
+
+    .descricao-perfil h1 {
+        font-size: 2.15rem;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .page,
+    .links-button {
+        animation: none;
+        transition: none;
+    }
+}
+
+@keyframes fadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
